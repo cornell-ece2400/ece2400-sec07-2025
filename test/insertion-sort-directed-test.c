@@ -79,6 +79,12 @@ void test_case_2_simple()
     UTST_ASSERT_INT_EQ( a[i], ref[i] );
 }
 
+//'''' TUTORIAL TASK '''''''''''''''''''''''''''''''''''''''''''''''''''
+// Add more directed tests
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+// Add at least one more test case for both the helper function and the
+// insertion sort function.
+
 //------------------------------------------------------------------------
 // main
 //------------------------------------------------------------------------

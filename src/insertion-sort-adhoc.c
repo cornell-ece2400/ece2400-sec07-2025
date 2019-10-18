@@ -11,8 +11,7 @@
 int main() {
 
   size_t size  = 5;
-  // int    a[]   = { 2, 4, 6, 8, 10, 0, 0, 0, 0, 0 };
-  int    a[]   = { 2, 8, 6, 4, 10, 0, 0, 0, 0, 0 };
+  int    a[]   = { 2, 4, 6, 8, 10, 0, 0, 0, 0, 0 };
 
   // Print out array before
 
@@ -26,10 +25,8 @@ int main() {
   // Call function to test. Initially this is sorted_insert, but you can
   // change this to be insertion_sort later if you want.
 
-  // sorted_insert( a, 0, 5, 7 );
-  // size += 1;
-
-  insertion_sort( a, 5 );
+  sorted_insert( a, 0, 5, 7 );
+  size += 1;
 
   // Print out arr after
 

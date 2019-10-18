@@ -28,21 +28,6 @@ void sorted_insert( int* a, size_t begin, size_t end, int value )
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
   // You can use either a forward (start from begin and iterate to end)
   // or reverse (start from end and iterate to begin) implementation.
-
-  // find where to insert new value
-  size_t idx = begin;
-  while (( idx < end ) && ( value > a[idx] ))
-    idx += 1;
-
-  // move all elements down to make room
-  int tmp = value;
-  for ( size_t i = idx; i < end; i++ ) {
-    int tmp2 = a[i];
-    a[i] = tmp;
-    tmp = tmp2;
-  }
-
-  a[end] = tmp;
 }
 
 //------------------------------------------------------------------------
@@ -52,12 +37,9 @@ void sorted_insert( int* a, size_t begin, size_t end, int value )
 
 void insertion_sort( int* a, size_t size )
 {
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
+  //'''' TUTORIAL TASK '''''''''''''''''''''''''''''''''''''''''''''''''''
   // Implement this function
-  //>'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
   // You can use either an out-of-place or an in-place implementation.
-
-  for ( size_t i = 0; i < size; i++ )
-    sorted_insert( a, 0, i, a[i] );
 }
 
