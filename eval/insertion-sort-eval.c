@@ -1,7 +1,7 @@
 //========================================================================
-// selection-sort-eval.c
+// insertion-sort-eval.c
 //========================================================================
-// This program evalutes the performance of selection sort by running for
+// This program evalutes the performance of insertion sort by running for
 // multiple trials and averaging the elapsed run times.
 //
 
@@ -37,8 +37,8 @@ int less_than( const void* p1, const void* p2 )
 void print_help()
 {
   printf(
-    "usage: ./selection-sort-eval <pattern> <size>\n\n"
-    "Evaluation program for selection_sort\n\n"
+    "usage: ./insertion-sort-eval <pattern> <size>\n\n"
+    "Evaluation program for insertion_sort\n\n"
     "positional arguments:\n"
     "  pattern     Pattern of the input array. It can be urandom0, urandom1, urandom2, reversed, or sorted.\n"
     "  size        Size of the input array. It has to be within (0, 50000].\n"
