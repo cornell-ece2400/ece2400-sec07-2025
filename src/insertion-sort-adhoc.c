@@ -6,7 +6,6 @@
 #include <stdlib.h>
 
 #include "insertion-sort.h"
-#include "utils.h"
 
 int main() {
 
