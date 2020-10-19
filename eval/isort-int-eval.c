@@ -1,5 +1,5 @@
 //========================================================================
-// insertion-sort-eval.c
+// isort-int-eval.c
 //========================================================================
 // This program evalutes the performance of insertion sort by running for
 // multiple trials and averaging the elapsed run times.
@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "insertion-sort.h"
+#include "isort-int.h"
 #include "ece2400-stdlib.h"
 
 //------------------------------------------------------------------------
@@ -16,18 +16,6 @@
 //------------------------------------------------------------------------
 
 #include "sort.dat"
-
-//------------------------------------------------------------------------
-// less_than
-//------------------------------------------------------------------------
-// Comparison function for qsort.
-
-int less_than( const void* p1, const void* p2 )
-{
-  int left  = *(const int*)p1;
-  int right = *(const int*)p2;
-  return left - right;
-}
 
 //------------------------------------------------------------------------
 // print_help
@@ -111,13 +99,13 @@ int main( int argc, char** argv )
 
   // Creates buffers for input and reference data
 
-  int* a_buffer = (int*) malloc( eval_size * sizeof(int) );
+  int* a_buffer = malloc( eval_size * sizeof(int) );
 
   // Creates buffers for reference data and use qsort as reference
 
-  int*  ref_buffer = malloc( eval_size * sizeof(int) );
+  int* ref_buffer = malloc( eval_size * sizeof(int) );
   memcpy( ref_buffer, eval_arr, eval_size * sizeof(int) );
-  qsort( (void*)ref_buffer, eval_size, sizeof(int), less_than );
+  ece2400_sort( ref_buffer, eval_size );
 
   printf( "Sort with %s dataset of size %d\n", argv[1], eval_size );
 
@@ -138,7 +126,7 @@ int main( int argc, char** argv )
       // Copy the input dataset for in-plcae sort
       memcpy( a_buffer, eval_arr, eval_size * sizeof(int) );
 
-      insertion_sort( a_buffer, eval_size );
+      isort_int( a_buffer, eval_size );
     }
 
     // Stop tracking time

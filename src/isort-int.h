@@ -1,10 +1,10 @@
 //========================================================================
-// insertion-sort.h
+// isort_int.h
 //========================================================================
 // Declarations for insertion sort
 
-#ifndef INSERTION_SORT_H
-#define INSERTION_SORT_H
+#ifndef ISORT_INT_H
+#define ISORT_INT_H
 
 #include <stdlib.h>
 
@@ -14,7 +14,7 @@ void sorted_insert( int* a, size_t begin, size_t end, int value );
 
 // Sort function
 
-void insertion_sort( int a[], size_t size );
+void isort_int( int a[], size_t size );
 
-#endif // INSERTION_SORT_H
+#endif // ISORT_INT_H
 

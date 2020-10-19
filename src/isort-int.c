@@ -1,5 +1,5 @@
 //========================================================================
-// insertion-sort.c
+// isort-int.c
 //========================================================================
 // Implementation of the insertion sort function
 //
@@ -12,7 +12,7 @@
 //
 
 #include <stdio.h>
-#include "insertion-sort.h"
+#include "isort-int.h"
 #include "ece2400-stdlib.h"
 
 //------------------------------------------------------------------------
@@ -23,6 +23,8 @@
 
 void sorted_insert( int* a, size_t begin, size_t end, int value )
 {
+  ECE2400_DEBUG_ARRAY_INT( a, end-begin );
+
   //'''' TUTORIAL TASK '''''''''''''''''''''''''''''''''''''''''''''''''''
   // Implement this function
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -31,11 +33,11 @@ void sorted_insert( int* a, size_t begin, size_t end, int value )
 }
 
 //------------------------------------------------------------------------
-// insertion_sort
+// isort_int
 //------------------------------------------------------------------------
 // Sorts the array with insertion sort.
 
-void insertion_sort( int* a, size_t size )
+void isort_int( int* a, size_t size )
 {
   //'''' TUTORIAL TASK '''''''''''''''''''''''''''''''''''''''''''''''''''
   // Implement this function

@@ -1,37 +1,36 @@
 //========================================================================
-// insertion-sort-adhoc.c
+// isort-int-adhoc.c
 //========================================================================
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "insertion-sort.h"
+#include "isort-int.h"
 
 int main() {
 
-  size_t size  = 5;
-  int    a[]   = { 2, 4, 6, 8, 10, 0, 0, 0, 0, 0 };
+  size_t a_size = 5;
+  int    a[]    = { 2, 4, 6, 8, 10, 0, 0, 0, 0, 0 };
 
   // Print out array before
 
   printf( "Before: " );
 
-  for ( size_t i = 0; i < size; i++ )
+  for ( size_t i = 0; i < a_size; i++ )
     printf( "%d ", a[i] );
 
   printf( "\n" );
 
-  // Call function to test. Initially this is sorted_insert, but you can
-  // change this to be insertion_sort later if you want.
+  // Quick ad-hoc test for sorted insert
 
   sorted_insert( a, 0, 5, 7 );
-  size += 1;
+  a_size += 1;
 
-  // Print out arr after
+  // Print out array after
 
   printf( "After:  " );
 
-  for ( size_t i = 0; i < size; i++ )
+  for ( size_t i = 0; i < a_size; i++ )
     printf( "%d ", a[i] );
 
   printf( "\n" );
