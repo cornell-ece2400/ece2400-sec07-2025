@@ -10,15 +10,15 @@
 
 set(SRC_FILES
   ece2400-stdlib.c
-  insertion-sort.c
+  isort-int.c
 )
 
 set(TEST_ALL_FILES
-  insertion-sort-directed-test.c
+  isort-int-directed-test.c
 )
 
-set (EVAL_FILES
-  insertion-sort-eval.c
+set(EVAL_FILES
+  isort-int-eval.c
 )
 
 #=========================================================================
@@ -43,7 +43,30 @@ endfunction()
 cmake_minimum_required(VERSION 2.8)
 enable_language(C)
 enable_testing()
-project(pa3-algo)
+project(sec7)
+
+# Make sure we are using the correct version of gcc
+set(ece2400_gcc_version "6.3.1")
+if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+  if(CMAKE_C_COMPILER_VERSION VERSION_LESS ece2400_gcc_version)
+    message(FATAL_ERROR "It seems like your CMAKE GNU C compiler has "
+                        "version ${CMAKE_C_COMPILER_VERSION} but the "
+                        "required version for ECE 2400 PAs is >= "
+                        "${ece2400_gcc_version}. Please make sure you "
+                        "are developing on ECELinux and that you have "
+                        "sourced the setup script for ECE 2400. If "
+                        "this error persists, please rerun the build "
+                        "system after removing all files in your build "
+                        "directory (rm -rf build).")
+  endif()
+else()
+  message(FATAL_ERROR "It seems like your CMAKE C compiler is "
+                      "${CMAKE_C_COMPILER_ID}. The build system of "
+                      "ECE 2400 PAs requires a GNU C compiler. "
+                      "Please make sure you are developing on ECELinux "
+                      "and that you have sourced the setup script for "
+                      "ECE 2400!")
+endif()
 
 # Set and cache the build type
 set(default_build_type "debug")
@@ -55,9 +78,9 @@ endif()
 message(STATUS "Setting build type to '${CMAKE_BUILD_TYPE}'")
 
 # Flags for GCC
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wvla -pedantic-errors -Werror")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wvla -Werror -Werror=vla")
 set(CMAKE_C_FLAGS_DEBUG "-O0 -g --coverage -Wno-unused-parameter")
-set(CMAKE_C_FLAGS_EVAL "-O3 -g")
+set(CMAKE_C_FLAGS_EVAL "-DEVAL -O3 -g -Wno-unused-parameter")
 
 # Path to this PA's source files
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
@@ -81,7 +104,7 @@ add_library(${PROJECT_NAME} ${LIB_SRCS})
 # Test targets
 #-------------------------------------------------------------------------
 
-add_custom_target(check COMMAND ctest "--timeout" "10")
+add_custom_target(check COMMAND ctest "--timeout" "10" ${CTEST_OUTPUT_ON_FAILURE})
 
 foreach(TEST_FILE ${TEST_ALL_FILES})
 
@@ -90,9 +113,23 @@ foreach(TEST_FILE ${TEST_ALL_FILES})
 
   # Add test
   add_executable(${TEST_BIN} EXCLUDE_FROM_ALL ${TEST_SRC})
-  target_link_libraries(${TEST_BIN} m ${PROJECT_NAME}) # link the math and src library
+  target_link_libraries(${TEST_BIN} ${PROJECT_NAME} m) # link the math and src library
   add_dependencies(check ${TEST_BIN})
   add_test(${TEST_BIN} ${TEST_BIN})
+
+endforeach(TEST_FILE)
+
+#-------------------------------------------------------------------------
+# Milestone test targets
+#-------------------------------------------------------------------------
+
+add_custom_target(check-milestone COMMAND ctest "-L" "milestone" "--timeout" "10")
+
+foreach(TEST_FILE ${TEST_MILESTONE_FILES})
+
+  remove_extension(TEST_BIN ${TEST_FILE})
+  add_dependencies(check-milestone ${TEST_BIN})
+  set_tests_properties(${TEST_BIN} PROPERTIES LABELS "milestone")
 
 endforeach(TEST_FILE)
 
@@ -109,7 +146,7 @@ foreach(EVAL_FILE ${EVAL_FILES})
 
   # Add eval
   add_executable(${EVAL_BIN} EXCLUDE_FROM_ALL ${EVAL_SRC})
-  target_link_libraries(${EVAL_BIN} m ${PROJECT_NAME}) # link the math and src library
+  target_link_libraries(${EVAL_BIN} ${PROJECT_NAME} m) # link the math and src library
   add_dependencies(eval ${EVAL_BIN})
 
 endforeach(EVAL_FILE)
