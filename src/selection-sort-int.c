@@ -1,7 +1,7 @@
 //========================================================================
-// isort-int.c
+// selection-sort-int.c
 //========================================================================
-// Implementation of the insertion sort function
+// Implementation of the selection sort function
 //
 //--------------------!!! IMPORTANT NOTE !!!------------------------------
 //
@@ -11,37 +11,36 @@
 //------------------------------------------------------------------------
 //
 
-#include <stdio.h>
-#include "isort-int.h"
-#include "ece2400-stdlib.h"
+#include "selection-sort-int.h"
+#include <assert.h>
 
 //------------------------------------------------------------------------
-// sorted_insert
+// find_min
 //------------------------------------------------------------------------
-// Insert an element into the proper location to preseve the invariant
-// that the given array is always sorted.
+// find the index of the minimum number in the array.
 
-void sorted_insert( int* a, size_t begin, size_t end, int value )
+int find_min( int* a, int begin, int end )
 {
-  ECE2400_DEBUG_ARRAY_INT( a, end-begin );
+  assert( begin < end );
 
-  //'''' TUTORIAL TASK '''''''''''''''''''''''''''''''''''''''''''''''''''
+  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
   // Implement this function
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-  // You can use either a forward (start from begin and iterate to end)
-  // or reverse (start from end and iterate to begin) implementation.
+
+  return 0;
 }
 
 //------------------------------------------------------------------------
-// isort_int
+// selection_sort_int
 //------------------------------------------------------------------------
-// Sorts the array with insertion sort.
+// Sorts the array with selection sort
 
-void isort_int( int* a, size_t size )
+void selection_sort_int( int* a, int size )
 {
-  //'''' TUTORIAL TASK '''''''''''''''''''''''''''''''''''''''''''''''''''
+  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
   // Implement this function
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-  // You can use either an out-of-place or an in-place implementation.
+  // Go through the whole array and track the minimum index. Then swap
+  // the minum value with the ith spot. Repeat.
 }
 

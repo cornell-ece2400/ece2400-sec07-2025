@@ -4,21 +4,22 @@
 # To add new implementations or new tests, simply append your new file to
 # the corresponding list.
 #
-# Author: Yanghui Ou
-#   Date: Sep 26, 2019
+# Author: Yanghui Ou, Peitian Pan
+#   Date: Oct 30, 2020
 #
 
 set(SRC_FILES
   ece2400-stdlib.c
-  isort-int.c
+  selection-sort-int.c
 )
 
 set(TEST_ALL_FILES
-  isort-int-directed-test.c
+  selection-sort-int-helper-test.c
+  selection-sort-int-directed-test.c
 )
 
 set(EVAL_FILES
-  isort-int-eval.c
+  selection-sort-int-eval.c
 )
 
 #=========================================================================
@@ -40,10 +41,10 @@ endfunction()
 # Set up environment
 #-------------------------------------------------------------------------
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8...3.19)
 enable_language(C)
 enable_testing()
-project(sec7)
+project(pa3-algo)
 
 # Make sure we are using the correct version of gcc
 set(ece2400_gcc_version "6.3.1")
@@ -192,3 +193,41 @@ foreach(TEST_FILE ${TEST_ALL_FILES})
   add_dependencies(memcheck memcheck-${TEST_BIN})
 
 endforeach(TEST_FILE)
+
+#-------------------------------------------------------------------------
+# Clang format target
+#-------------------------------------------------------------------------
+
+add_custom_target(clang-format
+  COMMAND echo ""
+  COMMAND echo "========================================================="
+  COMMAND echo " clang-format has finished! Please check your code or do "
+  COMMAND echo " ``git diff'' to inspect the changes.                    "
+  COMMAND echo "========================================================="
+  COMMAND echo ""
+)
+
+add_custom_target(clang-format-check-git-clean
+  COMMAND git diff --exit-code > /dev/null || {
+              echo &&
+              echo ========================================================= &&
+              echo  \ Your git repo has unstaged changes. Please commit all  &&
+              echo  \ your changes before running clang-format!              &&
+              echo ========================================================= &&
+              echo &&
+              exit 1\;
+          }
+)
+
+add_custom_target(clang-format-run
+  COMMAND mkdir -p "clang-format-log"
+  COMMAND clang-format "-i"
+                       "-style=file"
+                       "${SRC_DIR}/*.c"
+                       "${SRC_DIR}/*.h"
+                       "${TEST_DIR}/*.c"
+                       "2>&1" "clang-format-log/c_files.stdout" || exit 0
+)
+
+add_dependencies(clang-format-run clang-format-check-git-clean)
+add_dependencies(clang-format clang-format-run)

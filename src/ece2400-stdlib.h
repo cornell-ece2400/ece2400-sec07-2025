@@ -11,8 +11,8 @@
 #ifndef ECE2400_STDLIB_H
 #define ECE2400_STDLIB_H
 
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
 
 #define RED    "\033[31m"
 #define GREEN  "\033[32m"
@@ -43,77 +43,91 @@ extern double __double_expr0;
 extern double __double_expr1;
 
 // Check macro helper functions
-char* __ece2400_get_file_name(char*);
-void  __ece2400_fail(char*, int, char*);
-void  __ece2400_check_and_print_uniop(char*, int, char*);
-void  __ece2400_check_and_print_int_binop(char*, int, char*, char*);
-void  __ece2400_check_and_print_double_binop(char*, int, char*, char*);
+char* __ece2400_get_file_name( char* );
+void  __ece2400_fail( char*, int, char* );
+void  __ece2400_check_and_print_uniop( char*, int, char* );
+void  __ece2400_check_and_print_int_binop( char*, int, char*, char* );
+void  __ece2400_check_and_print_double_binop( char*, int, char*, char* );
+
+//------------------------------------------------------------------------
+// ECE2400_UNUSED()
+//------------------------------------------------------------------------
+#define ECE2400_UNUSED( x )                                   \
+  do {                                                        \
+    __attribute__( ( __unused__ ) ) int unused_##x = (int) x; \
+  } while ( 0 )
 
 //------------------------------------------------------------------------
 // ECE2400_CHECK_FAIL()
 //------------------------------------------------------------------------
 // Unconditionally fail a test case.
 
-#define ECE2400_CHECK_FAIL() \
-  __ece2400_fail( __FILE__, __LINE__, "ECE2400_CHECK_FAIL" ); \
-  return;
+#define ECE2400_CHECK_FAIL()                                    \
+  do {                                                          \
+    __ece2400_fail( __FILE__, __LINE__, "ECE2400_CHECK_FAIL" ); \
+    return;                                                     \
+  } while ( 0 )
 
 //------------------------------------------------------------------------
 // ECE2400_CHECK_TRUE( expr_ )
 //------------------------------------------------------------------------
 // Checks to see if the expression is true.
 
-#define ECE2400_CHECK_TRUE( expr_ ) \
-  __int_expr0 = expr_; \
-  __failure_condition = !__int_expr0; \
-  __ece2400_check_and_print_uniop( __FILE__, __LINE__, #expr_ ); \
-  if ( __failure_condition ) return;
+#define ECE2400_CHECK_TRUE( expr_ )                                \
+  do {                                                             \
+    __int_expr0         = expr_;                                   \
+    __failure_condition = !__int_expr0;                            \
+    __ece2400_check_and_print_uniop( __FILE__, __LINE__, #expr_ ); \
+    if ( __failure_condition )                                     \
+      return;                                                      \
+  } while ( 0 )
 
 //------------------------------------------------------------------------
 // ECE2400_CHECK_FALSE( expr_ )
 //------------------------------------------------------------------------
 // Checks to see if the expression is false.
 
-#define ECE2400_CHECK_FALSE( expr_ ) \
-  __int_expr0 = expr_; \
-  __failure_condition = __int_expr0; \
-  __ece2400_check_and_print_uniop( __FILE__, __LINE__, #expr_ ); \
-  if ( __failure_condition ) return;
+#define ECE2400_CHECK_FALSE( expr_ )                               \
+  do {                                                             \
+    __int_expr0         = expr_;                                   \
+    __failure_condition = __int_expr0;                             \
+    __ece2400_check_and_print_uniop( __FILE__, __LINE__, #expr_ ); \
+    if ( __failure_condition )                                     \
+      return;                                                      \
+  } while ( 0 )
 
 //------------------------------------------------------------------------
 // ECE2400_CHECK_INT_EQ( expr0_, expr1_ )
 //------------------------------------------------------------------------
 // Checks to see if the two expressions are equal using the != operator.
 
-#define ECE2400_CHECK_INT_EQ( expr0_, expr1_ ) {\
-  __int_expr0 = (int)(expr0_); \
-  __int_expr1 = (int)(expr1_); \
-  __failure_condition = __int_expr0 != __int_expr1; \
-  __ece2400_check_and_print_int_binop( __FILE__, __LINE__, #expr0_, #expr1_ ); \
-  if ( __failure_condition ) return;}
-
-//------------------------------------------------------------------------
-// ECE2400_CHECK_ARRAY_INT_EQ( expr0_, expr1_, size_ )
-//------------------------------------------------------------------------
-// Checks to see if the two arrays of integers are equal using the
-// != operator.
-
-#define ECE2400_CHECK_ARRAY_INT_EQ( expr0_, expr1_, size_ )             \
-  for ( size_t i = 0; i < size_; i++ ) {                                \
-    ECE2400_CHECK_INT_EQ( expr0_[i], expr1_[i] );                       \
-  }
+#define ECE2400_CHECK_INT_EQ( expr0_, expr1_ )                        \
+  do {                                                                \
+    __int_expr0         = (int) ( expr0_ );                           \
+    __int_expr1         = (int) ( expr1_ );                           \
+    __failure_condition = __int_expr0 != __int_expr1;                 \
+    __ece2400_check_and_print_int_binop( __FILE__, __LINE__, #expr0_, \
+                                         #expr1_ );                   \
+    if ( __failure_condition )                                        \
+      return;                                                         \
+  } while ( 0 )
 
 //------------------------------------------------------------------------
 // ECE2400_CHECK_APPROX_EQ( expr0_, expr1_, pct_ )
 //------------------------------------------------------------------------
 // Checks to see if the two expressions are within percent of each other.
 
-#define ECE2400_CHECK_APPROX_EQ( expr0_, expr1_, pct_ ) \
-  __double_expr0 = expr0_; \
-  __double_expr1 = expr1_; \
-  __failure_condition = fabs( __double_expr0 - __double_expr1 ) > fabs( (double)(pct_) * __double_expr1 ); \
-  __ece2400_check_and_print_double_binop( __FILE__, __LINE__, #expr0_, #expr1_ ); \
-  if ( __failure_condition ) return;
+#define ECE2400_CHECK_APPROX_EQ( expr0_, expr1_, pct_ )                  \
+  do {                                                                   \
+    __double_expr0      = expr0_;                                        \
+    __double_expr1      = expr1_;                                        \
+    __failure_condition = fabs( __double_expr0 - __double_expr1 ) >      \
+                          fabs( (double) (pct_) *__double_expr1 );       \
+    __ece2400_check_and_print_double_binop( __FILE__, __LINE__, #expr0_, \
+                                            #expr1_ );                   \
+    if ( __failure_condition )                                           \
+      return;                                                            \
+  } while ( 0 )
 
 //------------------------------------------------------------------------
 // ECE2400_DEBUG( ... ) and ECE2400_DEBUG_NEWLINE
@@ -124,44 +138,21 @@ void  __ece2400_check_and_print_double_binop(char*, int, char*, char*);
 
 #ifndef EVAL
 
-#define ECE2400_DEBUG( ... ) \
-  if ( __n > 0 ) { \
-    printf(" - [ " YELLOW "-info-" RESET " ] File %s:%d: ", __ece2400_get_file_name(__FILE__), __LINE__); \
-    printf(__VA_ARGS__); \
-    printf("\n"); \
-  }
-
-#define ECE2400_DEBUG_ARRAY_INT( array_, size_ )                        \
-  if ( __n > 0 ) {                                                      \
-    printf(" - [ " YELLOW "-info-" RESET " ] %s:%d: %s = { ",           \
-      __ece2400_get_file_name(__FILE__), __LINE__, #array_);            \
-    for ( size_t i = 0; i < size_; i++ ) {                              \
-      printf( "%d", array_[i] );                                        \
-      if ( i != size_-1 )                                               \
-        printf( ", " );                                                 \
-    }                                                                   \
-    printf(" }\n");                                                     \
-  }
-
-#define ECE2400_DEBUG_NEWLINE \
-  if ( __n > 0 ) { printf("\n"); }
+#define ECE2400_DEBUG( ... )                                   \
+  do {                                                         \
+    if ( __n > 0 ) {                                           \
+      printf( " - [ " YELLOW "-info-" RESET " ] File %s:%d: ", \
+              __ece2400_get_file_name( __FILE__ ), __LINE__ ); \
+      printf( __VA_ARGS__ );                                   \
+      printf( "\n" );                                          \
+    }                                                          \
+  } while ( 0 )
 
 #else
 
 #define ECE2400_DEBUG( ... ) ;
 
-#define ECE2400_DEBUG_ARRAY_INT( ... ) ;
-
-#define ECE2400_DEBUG_NEWLINE ;
-
-#endif // #ifndef EVAL
-
-//------------------------------------------------------------------------
-// distance_int
-//------------------------------------------------------------------------
-// Return the distance between the two given integers.
-
-uint_t distance_int( int a, int b );
+#endif  // #ifndef EVAL
 
 //------------------------------------------------------------------------
 // ece2400_malloc
@@ -188,7 +179,7 @@ void ece2400_free( void* ptr );
 //------------------------------------------------------------------------
 // Prints the contents in an integer array.
 
-void ece2400_print_array( int* a, size_t size );
+void ece2400_print_array( int* a, int size );
 
 //------------------------------------------------------------------------
 // ece2400_sort
@@ -196,7 +187,7 @@ void ece2400_print_array( int* a, size_t size );
 // A reference sorting function that sorts an array of integer in
 // ascending order.
 
-void ece2400_sort( int* a, size_t size );
+void ece2400_sort( int* a, int size );
 
 //------------------------------------------------------------------------
 // ece2400_mem_reset
@@ -211,14 +202,14 @@ void ece2400_mem_reset();
 // Return the amount of heap space that has been allocated so far in a
 // program.
 
-size_t ece2400_mem_get_usage();
+int ece2400_mem_get_usage();
 
 //------------------------------------------------------------------------
 // ece2400_mem_get_peak
 //------------------------------------------------------------------------
 // Return the peak heap usage.
 
-size_t ece2400_mem_get_peak();
+int ece2400_mem_get_peak();
 
 //------------------------------------------------------------------------
 // ece2400_timer_reset
