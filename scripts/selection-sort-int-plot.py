@@ -54,7 +54,7 @@ ax.plot( n, trend2(n), '--' )
 
 # Add some labels, grid, an save to a PDF
 
-ax.set( xlabel="Measured Execution Time (s)", ylabel="Input Array Size" )
+ax.set( xlabel="Input Array Size", ylabel="Measured Execution Time (s)" )
 ax.grid()
 fig.savefig("selection-sort-int-plot.pdf")
 
