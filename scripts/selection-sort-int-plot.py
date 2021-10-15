@@ -17,14 +17,11 @@ matplotlib.use('PDF')
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Array to store the size of the input array for each experiment
+# Arrays to store the size of the input array and corresponding measured
+# execution time for each experiment
 
-n = [ 1000, 2000, 4000, 6000, 8000, 10000, 12000 ]
-
-# Array to store the measured execution time corresponding to each of the
-# above input array values.
-
-t = [ 0.039154, 0.153973, 0.604535, 1.261636, 2.235659, 3.421576, 5.078687 ]
+n = [  1000,  2000,  4000,  6000,  8000, 10000, 12000 ]
+t = [     0,     0,     0,     0,     0,     0,     0 ]
 
 # Use polyfit to find a best fit 0th, 1st, 2nd order polynomial equations
 
