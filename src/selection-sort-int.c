@@ -19,7 +19,7 @@
 //------------------------------------------------------------------------
 // find the index of the minimum number in the array.
 
-int find_min( int* a, int begin, int end )
+int find_min( int* x, int begin, int end )
 {
   assert( begin < end );
 
@@ -35,7 +35,7 @@ int find_min( int* a, int begin, int end )
 //------------------------------------------------------------------------
 // Sorts the array with selection sort
 
-void selection_sort_int( int* a, int size )
+void selection_sort_int( int* x, int n )
 {
   //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
   // Implement this function
