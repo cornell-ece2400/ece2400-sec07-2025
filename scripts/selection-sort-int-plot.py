@@ -56,5 +56,5 @@ ax.plot( n, trend2(n), '--' )
 
 ax.set( xlabel="Input Array Size", ylabel="Measured Execution Time (s)" )
 ax.grid()
-fig.savefig("selection-sort-int-plot.pdf")
+fig.savefig( "selection-sort-int-plot.pdf", bbox_inches='tight' )
 
