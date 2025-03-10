@@ -11,6 +11,7 @@
 //   Date: Oct 13, 2020
 
 #include "ece2400-stdlib.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -48,24 +49,22 @@ double __double_expr1      = 0.0;
 // Allocate memory of size mem_size. Return a pointer to the newly
 // allocated memory or NULL if the allocation fails.
 
-void* ece2400_malloc( size_t mem_size )
-{
-  void* ptr = malloc( mem_size + sizeof( int ) );
+void* ece2400_malloc(size_t mem_size) {
+  void* ptr = malloc(mem_size + sizeof(int));
 
-  if ( ptr ) {
+  if (ptr) {
     // Update current usage
     mem_usage += (int) mem_size;
 
     // Update peak usage
-    if ( mem_usage > peak_usage )
+    if (mem_usage > peak_usage)
       peak_usage = mem_usage;
-  }
-  else
+  } else
     return NULL;
 
-  ( (int*) ptr )[0] = (int) mem_size;
+  ((int*) ptr)[0] = (int) mem_size;
 
-  return (void*) ( ( (int*) ptr ) + 1 );
+  return (void*) (((int*) ptr) + 1);
 }
 
 //------------------------------------------------------------------------
@@ -74,11 +73,10 @@ void* ece2400_malloc( size_t mem_size )
 // Free the memory block that is allocated using ece2400_malloc. According
 // to C standard, if ptr is NULL, no action occurs.
 
-void ece2400_free( void* ptr )
-{
-  if ( ptr ) {
-    mem_usage -= ( (int*) ptr )[-1];
-    free( ( ( (int*) ptr ) - 1 ) );
+void ece2400_free(void* ptr) {
+  if (ptr) {
+    mem_usage -= ((int*) ptr)[-1];
+    free((((int*) ptr) - 1));
   }
 }
 
@@ -87,13 +85,12 @@ void ece2400_free( void* ptr )
 //------------------------------------------------------------------------
 // Prints the contents in an integer array.
 
-void ece2400_print_array( int* a, int size )
-{
-  if ( size > 0 )
-    printf( "%d", a[0] );
-  for ( int i = 1; i < size; i++ )
-    printf( ", %d", a[i] );
-  printf( "\n" );
+void ece2400_print_array(int* a, int size) {
+  if (size > 0)
+    printf("%d", a[0]);
+  for (int i = 1; i < size; i++)
+    printf(", %d", a[i]);
+  printf("\n");
 }
 
 //------------------------------------------------------------------------
@@ -101,14 +98,13 @@ void ece2400_print_array( int* a, int size )
 //------------------------------------------------------------------------
 // Comparison function for qsort.
 
-int less_than( const void* a_p, const void* b_p )
-{
+int less_than(const void* a_p, const void* b_p) {
   int left  = *(const int*) a_p;
   int right = *(const int*) b_p;
 
-  if ( left > 0 && right < 0 )
+  if (left > 0 && right < 0)
     return 1;
-  else if ( left < 0 && right > 0 )
+  else if (left < 0 && right > 0)
     return -1;
   else
     return left - right;
@@ -120,17 +116,15 @@ int less_than( const void* a_p, const void* b_p )
 // A reference sorting function that sorts an array of integer in
 // ascending order.
 
-void ece2400_sort( int* a, int size )
-{
-  qsort( (void*) a, (size_t) size, sizeof( int ), less_than );
+void ece2400_sort(int* a, int size) {
+  qsort((void*) a, (size_t) size, sizeof(int), less_than);
 }
 
 //------------------------------------------------------------------------
 // ece2400_mem_reset
 //------------------------------------------------------------------------
 
-void ece2400_mem_reset()
-{
+void ece2400_mem_reset() {
   mem_usage  = 0;
   peak_usage = 0;
 }
@@ -141,8 +135,7 @@ void ece2400_mem_reset()
 // Return the amount of heap space that has been allocated so far in a
 // program.
 
-int ece2400_mem_get_usage()
-{
+int ece2400_mem_get_usage() {
   return mem_usage;
 }
 
@@ -151,8 +144,7 @@ int ece2400_mem_get_usage()
 //------------------------------------------------------------------------
 // Return the peak heap usage.
 
-int ece2400_mem_get_peak()
-{
+int ece2400_mem_get_peak() {
   return peak_usage;
 }
 
@@ -161,9 +153,8 @@ int ece2400_mem_get_peak()
 //------------------------------------------------------------------------
 // Resets the timer.
 
-void ece2400_timer_reset()
-{
-  gettimeofday( &start_time, NULL );
+void ece2400_timer_reset() {
+  gettimeofday(&start_time, NULL);
 }
 
 //------------------------------------------------------------------------
@@ -171,12 +162,11 @@ void ece2400_timer_reset()
 //------------------------------------------------------------------------
 //  Return the elapased time in seconds.
 
-double ece2400_timer_get_elapsed()
-{
-  gettimeofday( &end_time, NULL );
-  double elapsed_secs = (double) ( end_time.tv_sec - start_time.tv_sec );
-  double elapsed_usecs = (double) ( end_time.tv_usec - start_time.tv_usec );
-  double elapsed_time = elapsed_secs + ( elapsed_usecs / MILLION );
+double ece2400_timer_get_elapsed() {
+  gettimeofday(&end_time, NULL);
+  double elapsed_secs  = (double) (end_time.tv_sec - start_time.tv_sec);
+  double elapsed_usecs = (double) (end_time.tv_usec - start_time.tv_usec);
+  double elapsed_time  = elapsed_secs + (elapsed_usecs / MILLION);
   return elapsed_time;
 }
 
@@ -191,13 +181,12 @@ double ece2400_timer_get_elapsed()
 //------------------------------------------------------------------------
 // Return file name extracted from a __FILE__ string.
 
-char* __ece2400_get_file_name( char* full_path )
-{
-  int len = (int) strlen( full_path );
+char* __ece2400_get_file_name(char* full_path) {
+  int len       = (int) strlen(full_path);
   int start_pos = 0;
 
-  for ( int i = len - 1; i >= 0; i-- )
-    if ( full_path[i] == '/' ) {
+  for (int i = len - 1; i >= 0; i--)
+    if (full_path[i] == '/') {
       start_pos = i + 1;
       break;
     }
@@ -209,13 +198,11 @@ char* __ece2400_get_file_name( char* full_path )
 // __ece2400_fail
 //------------------------------------------------------------------------
 
-void __ece2400_fail( char* file, int lineno, char* expr )
-{
-  file = __ece2400_get_file_name( file );
-  if ( __n < 0 )
-    printf( "\n" );
-  printf( " - [ " RED "FAILED" RESET " ] %s:%d: %s\n", file, lineno,
-          expr );
+void __ece2400_fail(char* file, int lineno, char* expr) {
+  file = __ece2400_get_file_name(file);
+  if (__n < 0)
+    printf("\n");
+  printf(" - [ " RED "FAILED" RESET " ] %s:%d: %s\n", file, lineno, expr);
   __failed = 1;
 }
 
@@ -223,22 +210,19 @@ void __ece2400_fail( char* file, int lineno, char* expr )
 // __ece2400_check_and_print_uniop
 //------------------------------------------------------------------------
 
-void __ece2400_check_and_print_uniop( char* file, int lineno, char* expr )
-{
-  file = __ece2400_get_file_name( file );
-  if ( __failure_condition ) {
-    if ( __n < 0 )
-      printf( "\n" );
-    printf( " - [ " RED "FAILED" RESET " ] %s:%d: %s (%d)\n", file,
-            lineno, expr, __int_expr0 );
+void __ece2400_check_and_print_uniop(char* file, int lineno, char* expr) {
+  file = __ece2400_get_file_name(file);
+  if (__failure_condition) {
+    if (__n < 0)
+      printf("\n");
+    printf(" - [ " RED "FAILED" RESET " ] %s:%d: %s (%d)\n", file, lineno, expr,
+           __int_expr0);
     __failed = 1;
-  }
-  else if ( __n > 0 ) {
-    printf( " - [ " GREEN "passed" RESET " ] %s:%d: %s (%d)\n", file,
-            lineno, expr, __int_expr0 );
-  }
-  else if ( __n < 0 ) {
-    printf( GREEN "." RESET );
+  } else if (__n > 0) {
+    printf(" - [ " GREEN "passed" RESET " ] %s:%d: %s (%d)\n", file, lineno,
+           expr, __int_expr0);
+  } else if (__n < 0) {
+    printf(GREEN "." RESET);
   }
 }
 
@@ -246,24 +230,20 @@ void __ece2400_check_and_print_uniop( char* file, int lineno, char* expr )
 // __ece2400_check_and_print_int_binop
 //------------------------------------------------------------------------
 
-void __ece2400_check_and_print_int_binop( char* file, int lineno, char* expr1,
-                                          char* expr2 )
-{
-  file = __ece2400_get_file_name( file );
-  if ( __failure_condition ) {
-    if ( __n < 0 )
-      printf( "\n" );
-    printf( " - [ " RED "FAILED" RESET " ] %s:%d: %s != %s (%d != %d)\n",
-            file, lineno, expr1, expr2, __int_expr0, __int_expr1 );
+void __ece2400_check_and_print_int_binop(char* file, int lineno, char* expr1,
+                                         char* expr2) {
+  file = __ece2400_get_file_name(file);
+  if (__failure_condition) {
+    if (__n < 0)
+      printf("\n");
+    printf(" - [ " RED "FAILED" RESET " ] %s:%d: %s != %s (%d != %d)\n", file,
+           lineno, expr1, expr2, __int_expr0, __int_expr1);
     __failed = 1;
-  }
-  else if ( __n > 0 ) {
-    printf( " - [ " GREEN "passed" RESET
-            " ] %s:%d: %s == %s (%d == %d)\n",
-            file, lineno, expr1, expr2, __int_expr0, __int_expr1 );
-  }
-  else if ( __n < 0 ) {
-    printf( GREEN "." RESET );
+  } else if (__n > 0) {
+    printf(" - [ " GREEN "passed" RESET " ] %s:%d: %s == %s (%d == %d)\n", file,
+           lineno, expr1, expr2, __int_expr0, __int_expr1);
+  } else if (__n < 0) {
+    printf(GREEN "." RESET);
   }
 }
 
@@ -271,24 +251,19 @@ void __ece2400_check_and_print_int_binop( char* file, int lineno, char* expr1,
 // __ece2400_check_and_print_double_binop
 //------------------------------------------------------------------------
 
-void __ece2400_check_and_print_double_binop( char* file, int lineno,
-                                             char* expr1, char* expr2 )
-{
-  file = __ece2400_get_file_name( file );
-  if ( __failure_condition ) {
-    if ( __n < 0 )
-      printf( "\n" );
-    printf( " - [ " RED "FAILED" RESET
-            " ] %s:%d: %s != %s (%.10e != %.10e)\n",
-            file, lineno, expr1, expr2, __double_expr0, __double_expr1 );
+void __ece2400_check_and_print_double_binop(char* file, int lineno, char* expr1,
+                                            char* expr2) {
+  file = __ece2400_get_file_name(file);
+  if (__failure_condition) {
+    if (__n < 0)
+      printf("\n");
+    printf(" - [ " RED "FAILED" RESET " ] %s:%d: %s != %s (%.10e != %.10e)\n",
+           file, lineno, expr1, expr2, __double_expr0, __double_expr1);
     __failed = 1;
-  }
-  else if ( __n > 0 ) {
-    printf( " - [ " GREEN "passed" RESET
-            " ] %s:%d: %s == %s (%.10e == %.10e)\n",
-            file, lineno, expr1, expr2, __double_expr0, __double_expr1 );
-  }
-  else if ( __n < 0 ) {
-    printf( GREEN "." RESET );
+  } else if (__n > 0) {
+    printf(" - [ " GREEN "passed" RESET " ] %s:%d: %s == %s (%.10e == %.10e)\n",
+           file, lineno, expr1, expr2, __double_expr0, __double_expr1);
+  } else if (__n < 0) {
+    printf(GREEN "." RESET);
   }
 }

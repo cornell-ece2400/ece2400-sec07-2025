@@ -22,14 +22,13 @@
 //------------------------------------------------------------------------
 // Helper function to print the help message.
 
-void print_help()
-{
+void print_help() {
   printf(
-    "usage: ./selection-sort-int-eval <pattern> <size>\n\n"
-    "Evaluation program for selection sort\n\n"
-    "positional arguments:\n"
-    "  pattern     Pattern of the input array. Available patterns: { urandom, sorted-asc, sorted-desc }\n"
-    "  size        Size of the input array. It has to be within (0, 50000].\n" );
+      "usage: ./selection-sort-int-eval <pattern> <size>\n\n"
+      "Evaluation program for selection sort\n\n"
+      "positional arguments:\n"
+      "  pattern     Pattern of the input array. Available patterns: { urandom, sorted-asc, sorted-desc }\n"
+      "  size        Size of the input array. It has to be within (0, 50000].\n");
 }
 
 //------------------------------------------------------------------------
@@ -37,13 +36,12 @@ void print_help()
 //------------------------------------------------------------------------
 // Helper function that returns one of three input datasets.
 
-int* get_arr( char* p )
-{
-  if ( strcmp( p, "urandom" ) == 0 )
+int* get_arr(char* p) {
+  if (strcmp(p, "urandom") == 0)
     return arr_urandom;
-  if ( strcmp( p, "sorted-asc" ) == 0 )
+  if (strcmp(p, "sorted-asc") == 0)
     return arr_sorted_asc;
-  if ( strcmp( p, "sorted-desc" ) == 0 )
+  if (strcmp(p, "sorted-desc") == 0)
     return arr_sorted_desc;
   return NULL;
 }
@@ -52,33 +50,31 @@ int* get_arr( char* p )
 // main
 //------------------------------------------------------------------------
 
-int main( int argc, char** argv )
-{
+int main(int argc, char** argv) {
   int  eval_size;
   int* eval_arr;
 
   // Check command line arguments
 
-  if ( argc != 3 ) {
-    printf( "Invalid command line arguments!\n\n" );
+  if (argc != 3) {
+    printf("Invalid command line arguments!\n\n");
     print_help();
     return 1;
-  }
-  else {
-    eval_arr = get_arr( argv[1] );
+  } else {
+    eval_arr = get_arr(argv[1]);
 
     // Check pattern
-    if ( eval_arr == NULL ) {
-      printf( "Invalid pattern: %s\n\n", argv[1] );
+    if (eval_arr == NULL) {
+      printf("Invalid pattern: %s\n\n", argv[1]);
       print_help();
       return 1;
     }
 
-    eval_size = atoi( argv[2] );
+    eval_size = atoi(argv[2]);
 
     // Check size
-    if ( eval_size < 1 || eval_size > arr_size ) {
-      printf( "Invalid size: %d\n\n", eval_size );
+    if (eval_size < 1 || eval_size > arr_size) {
+      printf("Invalid size: %d\n\n", eval_size);
       print_help();
       return 1;
     }
@@ -99,19 +95,19 @@ int main( int argc, char** argv )
 
   // Creates buffers for input and reference data
 
-  int* arr_buffer = malloc( (size_t) eval_size * sizeof( int ) );
+  int* arr_buffer = malloc((size_t) eval_size * sizeof(int));
 
   // Creates buffers for reference data and use qsort as reference
 
-  int* ref_buffer = malloc( (size_t) eval_size * sizeof( int ) );
-  memcpy( ref_buffer, eval_arr, (size_t) eval_size * sizeof( int ) );
-  ece2400_sort( ref_buffer, eval_size );
+  int* ref_buffer = malloc((size_t) eval_size * sizeof(int));
+  memcpy(ref_buffer, eval_arr, (size_t) eval_size * sizeof(int));
+  ece2400_sort(ref_buffer, eval_size);
 
-  printf( "Sort with %s dataset of size %d\n", argv[1], eval_size );
+  printf("Sort with %s dataset of size %d\n", argv[1], eval_size);
 
   // Timing loop
 
-  for ( int i = 0; i < ntrials; i++ ) {
+  for (int i = 0; i < ntrials; i++) {
     // Reset memory counter
     ece2400_mem_reset();
 
@@ -120,14 +116,12 @@ int main( int argc, char** argv )
 
     // NOTE: here we have to time the memcpy as well. This may add a
     // linear trailing term to the time complexity.
-    for ( int j = 0; j < nsubtrials; j++ ) {
-
+    for (int j = 0; j < nsubtrials; j++) {
       // Copy the input dataset for in-place sort
-      memcpy( arr_buffer, eval_arr, (size_t) eval_size * sizeof( int ) );
+      memcpy(arr_buffer, eval_arr, (size_t) eval_size * sizeof(int));
 
       // Run the sort
-      selection_sort_int( arr_buffer, eval_size );
-
+      selection_sort_int(arr_buffer, eval_size);
     }
 
     // Stop tracking time
@@ -140,8 +134,8 @@ int main( int argc, char** argv )
     elapsed_total += elapsed;
     heap_usage_total += heap_usage;
 
-    printf( "Trial %d: elapsed time = %f second, peak heap usage = %d byte\n",
-            i, elapsed, heap_usage );
+    printf("Trial %d: elapsed time = %f second, peak heap usage = %d byte\n", i,
+           elapsed, heap_usage);
   }
 
   // Calculate average elapsed time and peak heap usage
@@ -149,22 +143,21 @@ int main( int argc, char** argv )
   double elapsed_avg    = elapsed_total / ntrials;
   int    heap_usage_avg = heap_usage_total / ntrials;
 
-  printf( "Average: elapsed time = %f second, peak heap usage = %d byte\n",
-          elapsed_avg, heap_usage_avg );
+  printf("Average: elapsed time = %f second, peak heap usage = %d byte\n",
+         elapsed_avg, heap_usage_avg);
 
   // Verify the results
 
-  if ( memcmp( arr_buffer, ref_buffer, (size_t) eval_size * sizeof( int ) ) != 0 ) {
-    printf( "Error: Dataset '%s' was not sorted correctly!\n", argv[1] );
-    free( arr_buffer );
-    free( ref_buffer );
+  if (memcmp(arr_buffer, ref_buffer, (size_t) eval_size * sizeof(int)) != 0) {
+    printf("Error: Dataset '%s' was not sorted correctly!\n", argv[1]);
+    free(arr_buffer);
+    free(ref_buffer);
     return 1;
-  }
-  else {
-    printf( "Verfication passed\n" );
+  } else {
+    printf("Verfication passed\n");
   }
 
-  free( arr_buffer );
-  free( ref_buffer );
+  free(arr_buffer);
+  free(ref_buffer);
   return 0;
 }

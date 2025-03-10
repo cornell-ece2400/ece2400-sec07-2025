@@ -12,6 +12,7 @@
 //
 
 #include "selection-sort-int.h"
+
 #include <assert.h>
 
 //------------------------------------------------------------------------
@@ -19,9 +20,8 @@
 //------------------------------------------------------------------------
 // find the index of the minimum number in the array.
 
-int find_min( int* x, int begin, int end )
-{
-  assert( begin < end );
+int find_min(int* x, int begin, int end) {
+  assert(begin < end);
 
   //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
   // Implement this function
@@ -35,12 +35,10 @@ int find_min( int* x, int begin, int end )
 //------------------------------------------------------------------------
 // Sorts the array with selection sort
 
-void selection_sort_int( int* x, int n )
-{
+void selection_sort_int(int* x, int n) {
   //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
   // Implement this function
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
   // Go through the whole array and track the minimum index. Then swap
   // the minum value with the ith spot. Repeat.
 }
-

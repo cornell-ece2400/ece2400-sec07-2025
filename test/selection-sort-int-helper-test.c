@@ -15,14 +15,13 @@
 //------------------------------------------------------------------------
 // Simple test case for the helper function.
 
-void test_case_1_simple()
-{
-  printf( "\n%s\n", __func__ );
-  int a[] = { 11, 7, 20, 0 };
-  ECE2400_CHECK_INT_EQ( find_min( a, 0, 4 ), 3 );
-  ECE2400_CHECK_INT_EQ( find_min( a, 0, 3 ), 1 );
-  ECE2400_CHECK_INT_EQ( find_min( a, 0, 2 ), 1 );
-  ECE2400_CHECK_INT_EQ( find_min( a, 0, 1 ), 0 );
+void test_case_1_simple() {
+  printf("\n%s\n", __func__);
+  int a[] = {11, 7, 20, 0};
+  ECE2400_CHECK_INT_EQ(find_min(a, 0, 4), 3);
+  ECE2400_CHECK_INT_EQ(find_min(a, 0, 3), 1);
+  ECE2400_CHECK_INT_EQ(find_min(a, 0, 2), 1);
+  ECE2400_CHECK_INT_EQ(find_min(a, 0, 1), 0);
 }
 
 //------------------------------------------------------------------------
