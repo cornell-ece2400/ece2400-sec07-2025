@@ -10,8 +10,6 @@ else
     exit 1
 fi
 
-cd build
-
 # Running /tests
 echo "Running tests..."
 if make test; then
@@ -20,7 +18,7 @@ if make test; then
 
     echo "selection-sort-int-eval" > results.txt
     echo "======================" >> results.txt
-    ./eval/selection-sort-int-eval $@ | tee -a results.txt
+    ./build/eval/selection-sort-int-eval $@ | tee -a results.txt
 
 else
     echo "Tests failed"
