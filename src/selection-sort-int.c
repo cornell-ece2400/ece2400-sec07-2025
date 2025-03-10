@@ -23,11 +23,15 @@
 int find_min(int* x, int begin, int end) {
   assert(begin < end);
 
-  //'''' ASSIGNMENT TASK '''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement this function
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-  return 0;
+  int min   = 2147483647;
+  int index = -1;
+  for (int i = begin; i < end; i++) {
+    if (x[i] < min) {
+      min   = x[i];
+      index = i;
+    }
+  }
+  return index;
 }
 
 //------------------------------------------------------------------------
@@ -41,4 +45,10 @@ void selection_sort_int(int* x, int n) {
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
   // Go through the whole array and track the minimum index. Then swap
   // the minum value with the ith spot. Repeat.
+  for (int i = 0; i < n; ++i) {
+    int min_idx = find_min(x, i, n);
+    int temp    = x[i];
+    x[i]        = x[min_idx];
+    x[min_idx]  = temp;
+  }
 }
