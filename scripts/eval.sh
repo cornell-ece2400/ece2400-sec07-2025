@@ -16,6 +16,8 @@ if make test; then
     echo "Tests passed"
     echo "Recording execution time..."
 
+    echo "selection-sort-int-eval" > results.txt
+    echo "======================" >> results.txt
     ./build/eval/selection-sort-int-eval $@ | tee -a results.txt
 
 else
